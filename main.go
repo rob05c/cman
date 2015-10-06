@@ -166,7 +166,7 @@ func (hs *JsonHeadings)  PrintString(width int) string {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println(`Usage: can <program>`)
+		fmt.Println(`Usage: cman <program>`)
 		return
 	}
 
