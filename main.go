@@ -1,25 +1,25 @@
 package main
 
 import (
-	"fmt"
-	"strconv"
-	"errors"
-	"io/ioutil"
 	"encoding/json"
-	"os/exec"
+	"errors"
+	"fmt"
+	"io/ioutil"
 	"os"
+	"os/exec"
+	"strconv"
 	"strings"
 )
 
 const (
-	Black = `0`
-	Red = `1`
-	Green = `2`
-	Brown = `3`
-	Blue = `4`
+	Black  = `0`
+	Red    = `1`
+	Green  = `2`
+	Brown  = `3`
+	Blue   = `4`
 	Purple = `5`
-	Cyan = `6`
-	Gray = `7`
+	Cyan   = `6`
+	Gray   = `7`
 )
 
 // Returns the ANSI colour code for the given background and foreground
@@ -45,32 +45,32 @@ func ResetColor() string {
 
 // TerminalSize returns the width and height of the tty, respectively
 func TerminalSize() (int, int, error) {
-  cmd := exec.Command("stty", "size")
-  cmd.Stdin = os.Stdin
-  out, err := cmd.Output()
+	cmd := exec.Command("stty", "size")
+	cmd.Stdin = os.Stdin
+	out, err := cmd.Output()
 	if err != nil {
 		return 0, 0, err
 	}
 	outarr := strings.Split(string(out), " ")
 	if len(outarr) != 2 {
-		return 0, 0, errors.New("Terminal size split error, stty size return unexpected: "  + string(out))
+		return 0, 0, errors.New("Terminal size split error, stty size return unexpected: " + string(out))
 	}
 
 	height, err := strconv.Atoi(outarr[0])
 	if err != nil {
-		return 0, 0, errors.New("Termianl size height error, stty size return unexpected: "  + string(outarr[0]))
+		return 0, 0, errors.New("Termianl size height error, stty size return unexpected: " + string(outarr[0]))
 	}
 
 	width, err := strconv.Atoi(strings.Trim(outarr[1], " \n"))
 	if err != nil {
-		return 0, 0, errors.New("Terminal size width error, stty size return unexpected: "  + string(outarr[1]))
+		return 0, 0, errors.New("Terminal size width error, stty size return unexpected: " + string(outarr[1]))
 	}
-	
+
 	return width, height, nil
 }
 
 type JsonHeading struct {
-	Title string `json:"title"`
+	Title    string   `json:"title"`
 	Commands []string `json:"commands"`
 }
 
@@ -127,7 +127,7 @@ func (hs *JsonHeadings) PrintHeadings(start, end, width int) string {
 	for i := start; i != end; i++ {
 		heading := hs.Headings[i]
 		s += InverseColor()
-		s += heading.Title + strings.Repeat(" ", width - len(heading.Title) - 1)
+		s += heading.Title + strings.Repeat(" ", width-len(heading.Title)-1)
 		s += ResetColor()
 		s += ` `
 	}
@@ -145,21 +145,21 @@ func (hs *JsonHeadings) PrintHeadings(start, end, width int) string {
 				continue
 			}
 			command := heading.Commands[j]
-			s += command + strings.Repeat(" ", width - len(command))
+			s += command + strings.Repeat(" ", width-len(command))
 		}
 	}
 
 	return s
 }
 
-func (hs *JsonHeadings)  PrintString(width int) string {
+func (hs *JsonHeadings) PrintString(width int) string {
 	var s string
-//	s += Color(Blue, Green, true) // debug
+	//	s += Color(Blue, Green, true) // debug
 
 	headingWidth := hs.HeadingWidth() + 1
 	headingsPerLine := width / headingWidth // +1 because headings are separated
 	for i := 0; i < len(hs.Headings); i += headingsPerLine {
-		s += hs.PrintHeadings(i, i + headingsPerLine, headingWidth) + "\n"
+		s += hs.PrintHeadings(i, i+headingsPerLine, headingWidth) + "\n"
 	}
 	return s
 }
@@ -182,7 +182,7 @@ func main() {
 		fmt.Printf("File error: %v\n", err)
 		return
 	}
-	
+
 	var jsonHeadings JsonHeadings
 	err = json.Unmarshal(file, &jsonHeadings)
 	if err != nil {
@@ -190,15 +190,15 @@ func main() {
 		return
 	}
 
-//	fmt.Println(jsonHeadings)
+	//	fmt.Println(jsonHeadings)
 
-	width, _, err := TerminalSize();
+	width, _, err := TerminalSize()
 	if err != nil {
 		fmt.Printf("Terminal size error: %v\n", err)
 		return
 	}
 
-//	fmt.Printf("Terminal Size: %vx%v\n", width, height)
+	//	fmt.Printf("Terminal Size: %vx%v\n", width, height)
 
 	fmt.Println(jsonHeadings.PrintString(width))
 }
