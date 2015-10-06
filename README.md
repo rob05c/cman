@@ -1,7 +1,7 @@
 # cman
 Cman (for Cheatsheet Man) displays a handy cheetsheet for terminal commands.
 
-https://i.imgur.com/POlIAyO.png
+![Cman Screenshot](https://i.imgur.com/POlIAyO.png)
 
 It displays cheatsheet info specified in JSON files (see the included curl.json example), inspired by http://daniel.haxx.se/blog/2015/09/16/a-curl-cheat-sheet/.
 
