@@ -1,0 +1,109 @@
+{
+  "headings": [
+    {"title": "verbose",
+     "commands": [
+       "-v",
+       "--trace-ascii <file>"
+       ]
+    },
+    {"title": "hide progress",
+     "commands": [
+       "-s"
+       ]
+    },
+    {"title": "extra info",
+     "commands": [
+       "-w \"format\""
+       ]
+    },
+    {"title": "write output",
+     "commands": [
+       "-O",
+       "-o <file>"
+       ]
+    },
+    {"title": "timeout",
+     "commands": [
+       "-m <seconds>"
+       ]
+    },
+    {"title": "POST",
+     "commands": [
+       "-d \"string\"",
+       "-d @file"
+       ]
+    },
+    {"title": "multipart formpost",
+     "commands": [
+       "-F name=value",
+       "-F name=@file"
+       ]
+    },
+    {"title": "PUT",
+     "commands": [
+       "-T <file>"
+       ]
+    },
+    {"title": "HEAD",
+     "commands": [
+       "-I"
+       ]
+    },
+    {"title": "custom method",
+     "commands": [
+       "-X \"METHOD\""
+       ]
+    },
+    {"title": "basic auth",
+     "commands": [
+       "-u user:password"
+       ]
+    },
+    {"title": "read cookiejar",
+     "commands": [
+       "-b <file>"
+       ]
+    },
+    {"title": "write cookiejar",
+     "commands": [
+       "-c <file>"
+       ]
+    },
+    {"title": "send cookies",
+     "commands": [
+       "-b \"c=1; d=2\""
+       ]
+    },
+    {"title": "user-agent",
+     "commands": [
+       "-A \"string\""
+       ]
+    },
+    {"title": "use proxy",
+     "commands": [
+       "-x <host:port>"
+       ]
+    },
+    {"title": "headers, add/remove",
+     "commands": [
+       "-H \"name: value",
+       "-H \"name:"
+       ]
+    },
+    {"title": "follow redirects",
+     "commands": [
+       "-L"
+       ]
+    },
+    {"title": "gzipped response",
+     "commands": [
+       "--compressed"
+       ]
+    },
+    {"title": "insecure HTTPS",
+     "commands": [
+       "-k"
+       ]
+    }
+  ]
+}
