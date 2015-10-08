@@ -22,7 +22,7 @@ const (
 	Gray   = `7`
 )
 
-// Color returns the ANSI colour code for the given background and foreground
+// Color returns the ANSI colour code for the given background and foreground.
 // Note Bold is usually interpeted as 'light' these days. E.g. 'light blue.'
 func Color(bg string, fg string, bold bool) string {
 	var boldstr string
@@ -35,10 +35,12 @@ func Color(bg string, fg string, bold bool) string {
 
 }
 
+// InverseColor returns the inverse ANSI colour code, which, when sent to the terminal, will invert the current colours.
 func InverseColor() string {
 	return "\033[7m"
 }
 
+// ResetColor returns the reset ANSI colour code, which will reset the terminal colours to their default
 func ResetColor() string {
 	return "\033[0m"
 }
@@ -69,15 +71,18 @@ func TerminalSize() (int, int, error) {
 	return width, height, nil
 }
 
+// JsonHeading represents a cheatsheet heading definition. This is designed to be parsed from JSON.
 type JsonHeading struct {
 	Title    string   `json:"title"`
 	Commands []string `json:"commands"`
 }
 
+// JsonHeading represents a cheatsheet definition, of all headings. This is designed to be parsed from JSON.
 type JsonHeadings struct {
 	Headings []JsonHeading `json:"headings"`
 }
 
+// Width returns the width of this JsonHeading, which is the width of the longest command.
 func (h JsonHeading) Width() int {
 	max := len(h.Title)
 	for _, v := range h.Commands {
@@ -88,6 +93,7 @@ func (h JsonHeading) Width() int {
 	return max
 }
 
+// HeadingWidth returns the width which headings should be, which is the width of the widest heading
 func (hs JsonHeadings) HeadingWidth() int {
 	max := 0
 	for _, v := range hs.Headings {
@@ -98,6 +104,7 @@ func (hs JsonHeadings) HeadingWidth() int {
 	return max
 }
 
+// CommandsHeight is the height which commands should be, which is the number of commands in the heading with the most commands.
 func (hs JsonHeadings) CommandsHeight() int {
 	max := 0
 	for _, v := range hs.Headings {
@@ -108,6 +115,8 @@ func (hs JsonHeadings) CommandsHeight() int {
 	return max
 }
 
+// RowHasCommands returns whether a given row has any commands.
+// This is used to not display blank lines, if all the headings in a given row have fewer than the tallest row.
 func (hs JsonHeadings) RowHasCommands(start, end, row int) bool {
 	for i := start; i < end; i++ {
 		heading := hs.Headings[i]
@@ -118,6 +127,7 @@ func (hs JsonHeadings) RowHasCommands(start, end, row int) bool {
 	return false
 }
 
+// PrintHeadings returns the heading string to be printed to the console, including ANSI color codes
 func (hs *JsonHeadings) PrintHeadings(start, end, width int) string {
 	if end > len(hs.Headings) {
 		end = len(hs.Headings)
@@ -152,6 +162,7 @@ func (hs *JsonHeadings) PrintHeadings(start, end, width int) string {
 	return s
 }
 
+// PrintString returns a string for printing, of the headings, including ANSI color codes, formatted to the given width.
 func (hs *JsonHeadings) PrintString(width int) string {
 	var s string
 
