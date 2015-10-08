@@ -22,7 +22,7 @@ const (
 	Gray   = `7`
 )
 
-// Returns the ANSI colour code for the given background and foreground
+// Color returns the ANSI colour code for the given background and foreground
 // Note Bold is usually interpeted as 'light' these days. E.g. 'light blue.'
 func Color(bg string, fg string, bold bool) string {
 	var boldstr string
@@ -154,7 +154,6 @@ func (hs *JsonHeadings) PrintHeadings(start, end, width int) string {
 
 func (hs *JsonHeadings) PrintString(width int) string {
 	var s string
-	//	s += Color(Blue, Green, true) // debug
 
 	headingWidth := hs.HeadingWidth() + 1
 	headingsPerLine := width / headingWidth // +1 because headings are separated
@@ -190,15 +189,11 @@ func main() {
 		return
 	}
 
-	//	fmt.Println(jsonHeadings)
-
 	width, _, err := TerminalSize()
 	if err != nil {
 		fmt.Printf("Terminal size error: %v\n", err)
 		return
 	}
-
-	//	fmt.Printf("Terminal Size: %vx%v\n", width, height)
 
 	fmt.Println(jsonHeadings.PrintString(width))
 }
